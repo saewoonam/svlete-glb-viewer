@@ -55960,6 +55960,7 @@ var app = (function () {
     	let camera, scene, renderer;
     	let geometry, material, mesh;
     	let controls;
+    	let url;
 
     	const onWindowResize = ev => {
     		// console.log('resize', ev, window.innerWidth, window.innerHeight)
@@ -55970,6 +55971,16 @@ var app = (function () {
     	};
 
     	onMount(async () => {
+    		console.log("query string", window.location.search);
+    		var urlParams = new URLSearchParams(window.location.search);
+
+    		if (urlParams.has("url")) {
+    			url = urlParams.get("url");
+    			console.log("got url from params", url);
+    		} else {
+    			url = "./a.glb";
+    		}
+
     		init();
     	});
 
@@ -56011,7 +56022,7 @@ var app = (function () {
     		// var loader = new THREE.GLTFLoader();
     		// loader.load( 'https://threejs.org/examples/models/gltf/Horse.glb', function ( gltf ) {
     		loader.load(
-    			"./freecad.glb",
+    			url,
     			function (gltf) {
     				// loader.load( './Duck.glb', function ( gltf ) {
     				console.log(gltf);
@@ -56083,6 +56094,7 @@ var app = (function () {
     		material,
     		mesh,
     		controls,
+    		url,
     		onWindowResize,
     		init
     	});
@@ -56095,6 +56107,7 @@ var app = (function () {
     		if ("material" in $$props) material = $$props.material;
     		if ("mesh" in $$props) mesh = $$props.mesh;
     		if ("controls" in $$props) controls = $$props.controls;
+    		if ("url" in $$props) url = $$props.url;
     	};
 
     	if ($$props && "$$inject" in $$props) {

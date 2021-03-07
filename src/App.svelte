@@ -10,6 +10,7 @@
   let camera, scene, renderer;
   let geometry, material, mesh;
   let controls;
+  let url;
   
   const onWindowResize = (ev) => {
     // console.log('resize', ev, window.innerWidth, window.innerHeight)
@@ -19,6 +20,14 @@
   };
 
     onMount( async () => {
+        console.log('query string', window.location.search)
+      var urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.has('url')) {
+        url = urlParams.get('url')
+        console.log('got url from params', url);
+      } else {
+        url ='./a.glb'
+      }
       init();
     });
 
@@ -58,7 +67,7 @@
     // var loader = new THREE.GLTFLoader();
 
     // loader.load( 'https://threejs.org/examples/models/gltf/Horse.glb', function ( gltf ) {
-    loader.load( './freecad.glb', function ( gltf ) {
+    loader.load( url, function ( gltf ) {
       // loader.load( './Duck.glb', function ( gltf ) {
       console.log(gltf);
       scene.add( gltf.scene );
